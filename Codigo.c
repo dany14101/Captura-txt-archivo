@@ -51,7 +51,7 @@ void captura(FILE *arch, LISTA **p2)
 {
 	LISTA *aux=*p2,*nue;
 	char cadena[300];
-	while(fgets(cadena,sizeof(cadena),arch))
+	while(fscanf(arch,"%[^\n]",))
 	{
 		cadena[strcspn(cadena,"\n")]=0;
 		strncpy(aux->val,cadena,299);
