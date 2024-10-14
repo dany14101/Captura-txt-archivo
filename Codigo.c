@@ -49,14 +49,13 @@ LISTA* crear(FILE *arch)
 //Funcion captura por linea en un nodo differente
 void captura(FILE *arch, LISTA **p2)
 {
-	int n;
-	char cadena[10];
+	char cadena[5];
 	LISTA *aux=*p2,*nue;
-	while(fscanf(arch,"%9[^\n]%n",cadena,&n)==1)
+	while(fscanf(arch,"%[^\n]",cadena)==1)
 	{	
 		fgetc(arch);
 		nue=crean(arch);
-		nue->val=(char*)malloc(sizeof(char)*(n+1));
+		nue->val=(char*)malloc(sizeof(char)*(5));
 		strcpy(nue->val,cadena);
 		if(aux!=NULL)
 		{
