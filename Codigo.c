@@ -50,11 +50,9 @@ LISTA* crear(FILE *arch)
 void captura(FILE *arch, LISTA **p2)
 {
 	LISTA *aux=*p2,*nue;
-	char cadena[300];
-	while(fscanf(arch,"%[^\n]",))
+	while()
 	{
-		cadena[strcspn(cadena,"\n")]=0;
-		strncpy(aux->val,cadena,299);
+		fscanf(arch,"%[^\n]",aux->val)
 		nue=crean(arch);
 		aux->sig=nue;
 		aux=nue;
