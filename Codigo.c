@@ -18,8 +18,8 @@ int main()
 	arch=fopen("Rules.txt","r");
 	p2=crear(arch);
 	captura(arch,&p2);
-	imprime(p2)
-;	fclose(arch);
+	imprime(p2);
+	fclose(arch);
 }    
 
 //Crea el nodo
