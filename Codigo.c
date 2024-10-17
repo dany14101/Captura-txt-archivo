@@ -7,18 +7,29 @@ typedef struct LISTA
 	struct LISTA *sig;
 }LISTA;
 
+typedef struct REGLAS
+{
+	char produ;
+	char producion;
+	struct REGLAS *sig;
+}REGLAS;
+
 LISTA* crean(FILE *arch);
 LISTA* crear(FILE *arch);
 void captura(FILE *arch, LISTA **p2);
 void imprime(LISTA  *p2);
+void ciclo1 (LISTA *p2,REGLAS *p3);
 int main()
 { 
+	int i;
 	LISTA *p2;
 	FILE *arch;
 	arch=fopen("Rules.txt","r");
 	p2=crear(arch);
 	captura(arch,&p2);
+	REGLAS *p3=(*REGLAS)malloc(sizeof(REGLAS))
 	imprime(p2);
+	ciclo1 (p2,p3);
 	fclose(arch);
 }    
 
@@ -80,3 +91,21 @@ void imprime(LISTA  *p2)
 	}
 }
 
+void ciclo1 (LISTA *p2,REGLAS *P3)
+{
+	REGLAS *aux1=NULL;
+	LISTA *aux=p2;
+	char produc[10];
+	int i=0;
+	while(aux->sig!=NULL)
+	{
+		
+		while(p2->val[i]!='-')
+		{
+			produc[i]=p2->val[i];
+			i++;
+		}
+	}
+	printf("\n%s",produc);
+
+}
