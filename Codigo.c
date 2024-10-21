@@ -9,8 +9,8 @@ typedef struct LISTA
 
 typedef struct REGLAS
 {
-	char produ;
-	char producion;
+	char produ[10];
+	char producion[10];
 	struct REGLAS *sig;
 }REGLAS;
 
@@ -27,7 +27,7 @@ int main()
 	arch=fopen("Rules.txt","r");
 	p2=crear(arch);
 	captura(arch,&p2);
-	REGLAS *p3=(*REGLAS)malloc(sizeof(REGLAS))
+	REGLAS *p3=(REGLAS*)malloc(sizeof(REGLAS));
 	imprime(p2);
 	ciclo1 (p2,p3);
 	fclose(arch);
@@ -60,7 +60,7 @@ LISTA* crear(FILE *arch)
 //Funcion captura por linea en un nodo differente
 void captura(FILE *arch, LISTA **p2)
 {
-	char cadena[6];
+	char cadena[100];
 	LISTA *aux=*p2,*nue;
 	while(fgets(cadena,sizeof(cadena),arch))
 	{	
@@ -91,21 +91,31 @@ void imprime(LISTA  *p2)
 	}
 }
 
+//Funcion para que separe el producto y la produccion 
 void ciclo1 (LISTA *p2,REGLAS *P3)
 {
-	REGLAS *aux1=NULL;
 	LISTA *aux=p2;
-	char produc[10];
-	int i=0;
-	while(aux->sig!=NULL)
+	int i=0,j=0;
+	while(aux!=NULL)
 	{
-		
-		while(p2->val[i]!='-')
+		 i=0;
+		while(aux->val[i]!='-'&&aux->val[i]!='\0')
 		{
-			produc[i]=p2->val[i];
+			P3->produ[i]=aux->val[i];
 			i++;
 		}
+		P3->produ[i]='\0';
+		printf("%s",P3->produ);
+		i=i+2;
+		j=0;
+		while(aux->val[i]!='\0')
+		{
+			P3->producion[j]=aux->val[i];
+			i++;
+			j++;
+		}
+		P3->producion[j]='\0';
+		printf("%s",P3->producion);
+		aux=aux->sig;
 	}
-	printf("\n%s",produc);
-
 }
