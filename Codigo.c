@@ -17,8 +17,8 @@ typedef struct REGLAS
 LISTA* crean(FILE *arch);
 LISTA* crear(FILE *arch);
 void captura(FILE *arch, LISTA **p2);
-void imprime(LISTA  *p2);
-void paso1 (LISTA *p2,REGLAS *p3);
+int imprime(LISTA  *p2);
+void paso1 (LISTA *p2,REGLAS *p3,int i);
 int main()
 { 
 	int i;
@@ -27,9 +27,9 @@ int main()
 	arch=fopen("Rules.txt","r");
 	p2=crear(arch);
 	captura(arch,&p2);
-	REGLAS *p3=(REGLAS*)malloc(sizeof(REGLAS));
-	imprime(p2);
-	paso1 (p2,p3);
+	i=imprime(p2);
+	REGLAS *p3=(REGLAS*)malloc(sizeof(REGLAS)*i);
+	paso1 (p2,p3,i);
 	fclose(arch);
 }    
 
@@ -81,14 +81,17 @@ void captura(FILE *arch, LISTA **p2)
 }
 
 //Funcion de imprimir
-void imprime(LISTA  *p2)
+int imprime(LISTA  *p2)
 {
+	int k=0;
 	LISTA *aux=p2;
 	while(aux!= NULL)
 	{
 		printf("%s",aux->val);
 		aux=aux->sig;
+		k++;
 	}
+	reutnr(k);
 }
 
 //Funcion para que separe el producto y la produccion 
