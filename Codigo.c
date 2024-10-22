@@ -9,8 +9,8 @@ typedef struct LISTA
 
 typedef struct REGLAS
 {
-	char produ[10];
-	char producion[10];
+	char produ[50];
+	char producion[50];
 	struct REGLAS *sig;
 }REGLAS;
 
@@ -18,7 +18,7 @@ LISTA* crean(FILE *arch);
 LISTA* crear(FILE *arch);
 void captura(FILE *arch, LISTA **p2);
 void imprime(LISTA  *p2);
-void ciclo1 (LISTA *p2,REGLAS *p3);
+void paso1 (LISTA *p2,REGLAS *p3);
 int main()
 { 
 	int i;
@@ -29,7 +29,7 @@ int main()
 	captura(arch,&p2);
 	REGLAS *p3=(REGLAS*)malloc(sizeof(REGLAS));
 	imprime(p2);
-	ciclo1 (p2,p3);
+	paso1 (p2,p3);
 	fclose(arch);
 }    
 
@@ -92,10 +92,12 @@ void imprime(LISTA  *p2)
 }
 
 //Funcion para que separe el producto y la produccion 
-void ciclo1 (LISTA *p2,REGLAS *P3)
+void paso1 (LISTA *p2,REGLAS *P3)
 {
 	LISTA *aux=p2;
+	REGLAS *corre;
 	int i=0,j=0;
+	printf("\n");
 	while(aux!=NULL)
 	{
 		 i=0;
@@ -117,5 +119,24 @@ void ciclo1 (LISTA *p2,REGLAS *P3)
 		P3->producion[j]='\0';
 		printf("%s",P3->producion);
 		aux=aux->sig;
+	}
+//Une los productos iguales en un solo nodo con el producto
+	corre=P3;
+	while(corre!=NULL)
+	{
+		if(corre->produ==corre->sig->produ)
+		{
+			strcat(corre->producion,"|");
+			strcat(corre->producion,corre->sig->producion);
+			corre->sig=corre->sig->sig;
+		}
+			corre=corre->sig;
+	}
+	printf("\n");
+	corre=P3;
+	while(corre!=NULL)
+	{
+		printf("%s->%s\n",corre->produ,corre->producion);
+		corre=corre->sig;
 	}
 }
