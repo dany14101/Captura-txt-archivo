@@ -18,7 +18,7 @@ LISTA* crean(FILE *arch);
 LISTA* crear(FILE *arch);
 void captura(FILE *arch, LISTA **p2);
 int imprime(LISTA  *p2);
-void paso1 (LISTA *p2,REGLAS *p3,int i);
+void paso1 (LISTA *p2,REGLAS *p3,int k);
 int main()
 { 
 	int i;
@@ -65,7 +65,7 @@ void captura(FILE *arch, LISTA **p2)
 	while(fgets(cadena,sizeof(cadena),arch))
 	{	
 		nue=crean(arch);
-		nue->val=(char*)malloc(sizeof(char)*(6));
+		nue->val=(char*)malloc(sizeof(char)*(50));
 		strcpy(nue->val,cadena);
 		if(aux!=NULL)
 		{
@@ -91,55 +91,74 @@ int imprime(LISTA  *p2)
 		aux=aux->sig;
 		k++;
 	}
-	reutnr(k);
+	return(k);
 }
 
-//Funcion para que separe el producto y la produccion 
-void paso1 (LISTA *p2,REGLAS *P3)
+// Función para que separe el producto y la produccion
+void paso1(LISTA *p2, REGLAS *P3, int k)
 {
-	LISTA *aux=p2;
-	REGLAS *corre;
-	int i=0,j=0;
-	printf("\n");
-	while(aux!=NULL)
-	{
-		 i=0;
-		while(aux->val[i]!='-'&&aux->val[i]!='\0')
-		{
-			P3->produ[i]=aux->val[i];
-			i++;
-		}
-		P3->produ[i]='\0';
-		printf("%s",P3->produ);
-		i=i+2;
-		j=0;
-		while(aux->val[i]!='\0')
-		{
-			P3->producion[j]=aux->val[i];
-			i++;
-			j++;
-		}
-		P3->producion[j]='\0';
-		printf("%s",P3->producion);
-		aux=aux->sig;
-	}
-//Une los productos iguales en un solo nodo con el producto
-	corre=P3;
-	while(corre!=NULL)
-	{
-		if(corre->produ==corre->sig->produ)
-		{
-			strcat(corre->producion,"|");
-			strcat(corre->producion,corre->sig->producion);
-			corre->sig=corre->sig->sig;
-		}
-			corre=corre->sig;
-	}
-	printf("\n");
-	corre=P3;
-	while(corre!=NULL)
-	{
-		printf("%s->%s\n",corre->produ,corre->producion);
-		corre=corre->sig;
-	}
+    LISTA *aux = p2;
+    REGLAS *corre = P3;
+    int i = 0, j = 0;
+    
+    printf("\n");
+    
+    // Separar producto y producción de cada nodo de LISTA
+    while (aux != NULL)
+    {
+        i = 0;
+        // Copiar producto hasta el '-'
+        while (aux->val[i] != '-' && aux->val[i] != '\0')
+        {
+            corre->produ[i] = aux->val[i];
+            i++;
+        }
+        corre->produ[i] = '\0'; // Fin de cadena para 'produ'
+        
+        // Mostrar producto
+        printf("%s", corre->produ);
+        
+        // Saltar el "->"
+        i = i + 2;
+        j = 0;
+        
+        // Copiar la producción después del "->"
+        while (aux->val[i] != '\0')
+        {
+            corre->producion[j] = aux->val[i];
+            i++;
+            j++;
+        }
+        corre->producion[j] = '\0'; // Fin de cadena para 'producion'
+        
+        // Mostrar producción
+        printf("%s", corre->producion);
+        
+        aux = aux->sig;
+        corre++; // Avanzar al siguiente nodo de REGLAS
+    }
+    
+    // Unir productos iguales en un solo nodo con la producción concatenada
+    corre = P3;
+    while (corre != NULL && corre->sig != NULL) // Comprobar que corre->sig no sea NULL
+    {
+        if (strcmp(corre->produ, corre->sig->produ) == 0)
+        {
+            strcat(corre->producion, "|");
+            strcat(corre->producion, corre->sig->producion);
+            corre->sig = corre->sig->sig;
+        }
+        else
+        {
+            corre = corre->sig;
+        }
+    }
+    
+    // Imprimir la lista final de REGLAS
+    corre = P3;
+    while (corre != NULL)
+    {
+        printf("%s -> %s\n", corre->produ, corre->producion);
+        corre++;
+    }
 }
