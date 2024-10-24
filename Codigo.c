@@ -21,6 +21,11 @@ int main()
 	LISTA *p2;
 	FILE *arch;
 	arch=fopen("Rules.txt","r");
+	if(!arch)
+	{
+		printf("No se puede abrir el archivo");
+		return 1;
+	}
 	p2=crear(arch);
 	captura(arch,&p2);
 	imprime(p2);
@@ -60,7 +65,6 @@ void captura(FILE *arch, LISTA **p2)
 	while(fgets(cadena,sizeof(cadena),arch))
 	{	
 		nue=crean(arch);
-		nue->val=(char*)malloc(sizeof(char)*(50));
 		strcpy(nue->val,cadena);
 		if(aux!=NULL)
 		{
@@ -89,27 +93,73 @@ void imprime(LISTA  *p2)
 // Función para que separe el producto y la produccion
 void paso1(LISTA *p2)
 {
-	int i=0,j;
-    LISTA *aux=p2;
+	int i,j;
+    LISTA *aux=p2,*corre,*ant;
+	char produ[50]="";
+//Separa el producto y la produccion
 	while(aux!=NULL)
 	{
 		i=0;
-		j=0;
-		while(aux->val[i]!='-')
+		while(aux->val[i]!='-'&&aux->val[i]!='\0')
 		{
 			aux->produ[i]=aux->val[i];
+			i++;
 		}
+		aux->produ[i]='\0';
 		i+=2;
-		while(aux->val[i]!='\0')
+		j=0;
+		while(aux->val[i]!='\0'&&aux->val[i]!='\n')
 		{
-			aux->produccion[j]=aux->val[i];
+			aux->produccion[j++]=aux->val[i++];
 		}
+		aux->produccion[j]='\0';
 		aux=aux->sig;
 	}
+//Junta los que tengan el mismo producto
 	aux=p2;
 	while(aux!=NULL)
 	{
-		printf(" %s  %s",aux->produ,aux->produccion);
+		ant=aux;
+		corre=aux->sig;
+		while(corre!=NULL)
+		{
+			if(strcmp(aux->produ,corre->produ)==0)
+			{
+				strcat(aux->produccion,"|");
+				strcat(aux->produccion,corre->produccion);
+				ant->sig=corre->sig;
+				free(corre->val);
+				free(corre);
+				corre=ant->sig;
+			}
+			else
+			{
+				ant=corre;
+				corre=corre->sig;
+			}
+		}
+		aux=aux->sig;
+	}
+	
+	aux=p2;
+	while(aux!=NULL)
+	{
+		printf("%s  %s\n",aux->produ,aux->produccion);
 		aux=aux->sig;
 	}
 }
+
+
+
+
+
+/* 
+//Codigo extra que puede servir
+//Imprime los productos y produccion por separado
+	aux=p2;
+	while(aux!=NULL)
+	{
+		printf("%s  %s",aux->produ,aux->produccion);
+		aux=aux->sig;
+	}
+*/
