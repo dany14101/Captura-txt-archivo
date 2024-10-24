@@ -16,6 +16,7 @@ LISTA* crear(FILE *arch);
 void captura(FILE *arch, LISTA **p2);
 void imprime(LISTA  *p2);
 void paso1 (LISTA *p2);
+void ciclo1 (LISTA *p2);
 int main()
 { 
 	LISTA *p2;
@@ -30,6 +31,7 @@ int main()
 	captura(arch,&p2);
 	imprime(p2);
 	paso1 (p2);
+	ciclo1(p2);
 	fclose(arch);
 }    
 
@@ -149,7 +151,41 @@ void paso1(LISTA *p2)
 	}
 }
 
-
+//Hace el primer ciclo de arriba hacia abajo
+void ciclo1 (LISTA *p2)
+{
+	LISTA *aux=p2,*aux1=p2;
+	int i;
+	char op;
+	while(aux1!=NULL)
+	{
+		aux=p2;
+		while(aux!=NULL)
+		{
+			i=0;
+			while(aux->produccion[i]!='\0')
+			{
+				if(aux1->produ[0]==aux->produccion[i])
+				{
+					if(aux->produccion[i+1]=='|')
+					{
+						op=aux->produccion[i-1];
+						strcpy(aux->produccion,"{op}");
+						i++;
+					}
+					else
+					{
+						op=aux->produccion[i+1];
+						strcpy(aux->produccion,"{op}");
+						i++;
+					}
+				}
+			}
+			aux=aux->sig;
+		}
+		aux1=aux1->sig;
+	}
+}
 
 
 
