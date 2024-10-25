@@ -145,6 +145,7 @@ void paso1(LISTA *p2)
 	}
 	
 	aux=p2;
+	printf("Paso1:\n");
 	while(aux!=NULL)
 	{
 		printf("%s  %s\n",aux->produ,aux->produccion);
@@ -175,11 +176,11 @@ void ciclo1 (LISTA *p2)
 						{
 							pal[j]=aux->produccion[i+j+1];
 						}
-						for(int k=0;k<i-1;k++)
+						for(int k=0;k<i;k++)
 						{
 							pal1[k]=aux->produccion[k];
 						}
-						l[0]=aux->produccion[i+1];
+						l[0]=aux->produccion[i-1];
 						l[1]='\0';
 						if(i>=2)
 						{
@@ -229,9 +230,10 @@ void ciclo1 (LISTA *p2)
 		aux=aux->sig;
 		}
 		prin=prin->sig;
-		aux=p2
+		aux=p2;
 	}
 	aux=p2;
+	printf("Paso2:\n");
 	while(aux!=NULL)
 	{
 		printf("%s  %s\n",aux->produ,aux->produccion);
