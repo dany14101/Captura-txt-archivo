@@ -211,6 +211,7 @@ void ciclo1 (LISTA *p2)
 			
 					strcat(aux->produccion,l);
 					strcat(aux->produccion,"}");
+					
 					strcat(aux->produccion,pal);
 				}
 			}
