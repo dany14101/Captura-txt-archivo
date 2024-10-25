@@ -17,7 +17,6 @@ void captura(FILE *arch, LISTA **p2);
 void imprime(LISTA  *p2);
 void paso1 (LISTA *p2);
 void ciclo1 (LISTA *p2);
-int trans(LISTA *aux);
 int main()
 { 
 	LISTA *p2;
@@ -86,11 +85,13 @@ void captura(FILE *arch, LISTA **p2)
 void imprime(LISTA  *p2)
 {
 	LISTA *aux=p2;
+	printf("Reglas:\n");
 	while(aux!= NULL)
 	{
 		printf("%s",aux->val);
 		aux=aux->sig;
 	}
+	printf("\n");
 }
 
 // Función para que separe el producto y la produccion
@@ -145,7 +146,7 @@ void paso1(LISTA *p2)
 	}
 	
 	aux=p2;
-	printf("Paso1:\n");
+	printf("\nPaso1:");
 	while(aux!=NULL)
 	{
 		printf("%s  %s\n",aux->produ,aux->produccion);
@@ -233,12 +234,14 @@ void ciclo1 (LISTA *p2)
 		aux=p2;
 	}
 	aux=p2;
-	printf("Paso2:\n");
+	printf("\n");
+	printf("Paso2:");
 	while(aux!=NULL)
 	{
 		printf("%s  %s\n",aux->produ,aux->produccion);
 		aux=aux->sig;
 	}
+	printf("\n");
 }
 
 
