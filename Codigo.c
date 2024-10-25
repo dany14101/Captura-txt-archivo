@@ -17,6 +17,7 @@ void captura(FILE *arch, LISTA **p2);
 void imprime(LISTA  *p2);
 void paso1 (LISTA *p2);
 void ciclo1 (LISTA *p2);
+int trans(LISTA *aux);
 int main()
 { 
 	LISTA *p2;
@@ -155,54 +156,9 @@ void paso1(LISTA *p2)
 void ciclo1 (LISTA *p2)
 {
 	LISTA *aux=p2;
-	int i,j;
-	char op[50],l;
 	while(aux!=NULL)
 	{
-		i=0;
-		j=0;
-		while(aux->produccion[i]!='\0')
-		{
-			if(aux->produccion[i]==aux->produ[0])
-			{
-				if(aux->produccion[i+1]=='|')
-				{
-					l=aux->produccion[i-1];
-					aux->produccion[i-1]='{';
-					aux->produccion[i]=l;
-					while(aux->produccion[i]!='\0')
-					{
-						op[j]=aux->produccion[i];
-						j++;
-						i++;
-					}
-					op[j]='\0';
-					aux->produccion[i+1]='}';
-					aux->produccion[i+2]='\0';
-					strcat(aux->produccion,op);
-					i=0;
-					j=0;
-				}
-				else
-				{
-					aux->produccion[i]='{';
-					i+=2;
-					while(aux->produccion[i]!='\0')
-					{
-						op[j]=aux->produccion[i];
-						j++;
-						i++;
-					}
-					op[j]='\0';
-					aux->produccion[i+2]='}';
-					aux->produccion[i+3]='\0';
-					strcat(aux->produccion,op);
-					i=0;
-					j=0;
-				}
-			}
-			i++;
-		}
+		while(trans(aux)!=0);
 		aux=aux->sig;
 	} 
 	
@@ -215,7 +171,27 @@ void ciclo1 (LISTA *p2)
 	}
 }
 
+int trans(LISTA *aux)
+{
+	char *pos,cadena[100],cadena2[100],*pr;
+	pos=strstr(aux->produccion,aux->produ);
+	  if (pos != NULL) {
+        // Guardar la parte de la cadena antes de la subcadena
+        strncpy(cadena, aux->produccion, pos - aux->produccion);
+        cadena[pos - aux->produccion] = '\0'; // Asegúrate de terminar la cadena
 
+        // Copiar la parte después de la subcadena
+        strcpy(cadena2, pos + strlen(aux->produ)); // +strlen para saltar la subcadena
+
+        // Formar la nueva cadena
+        strcpy(aux->produccion, "{");
+        strcat(aux->produccion, cadena);
+        strcat(aux->produccion, "}");
+        strcat(aux->produccion, cadena2);
+        return 1;
+    }
+    return 0;
+}
 
 /* 
 //Codigo extra que puede servir
