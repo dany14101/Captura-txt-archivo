@@ -194,7 +194,7 @@ void ciclo1 (LISTA *p2)
 					}
 					l[0]=aux->produccion[i-1];
 					l[1]='\0';
-					strcat(aux->produccion,pal);
+					strcpy(aux->produccion,pal);
 					strcat(aux->produccion,"{");
 					strcat(aux->produccion,l);
 					strcat(aux->produccion,"}");
