@@ -17,6 +17,7 @@ LISTA* crear(FILE *arch);
 void captura(FILE *arch, LISTA **p2);
 void imprime(LISTA  *p2);
 void paso1 (LISTA *p2);
+void ciclo1 (LISTA *p2);
 void ciclo2 (LISTA *p2);
 
 int main()
@@ -334,7 +335,7 @@ void ciclo2 (LISTA *p2)
 			}
 		aux=aux->sig;
 		}
-		prin=prin->sig;
+		prin=prin->ant;
 		aux=p2;
 	}
 	aux=p2;
