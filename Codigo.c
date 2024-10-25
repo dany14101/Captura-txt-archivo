@@ -7,6 +7,7 @@ typedef struct LISTA
 	char produ [50];
 	char produccion [50];
 	struct LISTA *sig;
+	struct LISTA *ant;
 }LISTA;
 
 
@@ -16,7 +17,8 @@ LISTA* crear(FILE *arch);
 void captura(FILE *arch, LISTA **p2);
 void imprime(LISTA  *p2);
 void paso1 (LISTA *p2);
-void ciclo1 (LISTA *p2);
+void ciclo2 (LISTA *p2);
+
 int main()
 { 
 	LISTA *p2;
@@ -32,6 +34,7 @@ int main()
 	imprime(p2);
 	paso1 (p2);
 	ciclo1(p2);
+	ciclo2(p2);
 	fclose(arch);
 }    
 
@@ -245,6 +248,105 @@ void ciclo1 (LISTA *p2)
 }
 
 
+
+//Hace el segundo ciclo de abajo
+void ciclo2 (LISTA *p2)
+{
+	LISTA *aux=p2,*prin=p2,*rel=p2;}
+	char pal[50],pal1 [50];
+	char  l[2];
+	rel->ant=p2;
+	rel=rel->sig;
+	while(rel->sig!=NULL)
+	{
+		rel->ant=aux;
+		aux=rel;
+		rel=rel->sig;
+	}
+	aux=p2;
+	prin=rel;
+	while(prin->ant!=p2)
+	{
+		while(aux!=NULL)
+		{
+			for(int i=0;aux->produccion[i]!='\0';i++)
+			{
+				if(aux->produccion[i]==prin->produ[0])
+				{
+					if(aux->produccion[i+1]!='|')
+					{
+						memset(pal,0,sizeof(pal));
+						memset(pal1,0,sizeof(pal1));
+						for(int j=0;aux->produccion[i+j+1]!='\0';j++)
+						{
+							pal[j]=aux->produccion[i+j+1];
+						}
+						for(int k=0;k<i;k++)
+						{
+							pal1[k]=aux->produccion[k];
+						}
+						l[0]=aux->produccion[i-1];
+						l[1]='\0';
+						if(i>=2)
+						{
+							strcpy(aux->produccion,pal1);
+							strcat(aux->produccion,"{");
+						}
+						else
+						{
+							strcpy(aux->produccion,"{");
+						}
+						strcat(aux->produccion,l);
+						strcat(aux->produccion,"}");
+						strcat(aux->produccion,pal);
+					}
+					else
+					{
+						memset(pal,0,sizeof(pal));
+						memset(pal1,0,sizeof(pal1));
+						for(int j=0;aux->produccion[j+i+1]!='\0';j++)
+						{
+							pal[j]=aux->produccion[i+j+1];
+						}
+						for(int k=0;k<i;k++)
+						{
+							pal1[k]=aux->produccion[k];
+						}
+						l[0]=aux->produccion[i-1];
+						l[1]='\0';
+						memset(aux->produccion,0,40);
+						if(i>=2)
+						{
+							strcat(aux->produccion,pal1);
+							strcat(aux->produccion,"{");
+						}
+						else
+						{
+							strcat(aux->produccion,"{");
+						}
+			
+						strcat(aux->produccion,l);
+						strcat(aux->produccion,"}");
+					
+						strcat(aux->produccion,pal);
+					}
+				}
+			}
+		aux=aux->sig;
+		}
+		prin=prin->sig;
+		aux=p2;
+	}
+	aux=p2;
+	printf("\n");
+	printf("Paso 3:");
+	while(aux!=NULL)
+	{
+		printf("%s  %s\n",aux->produ,aux->produccion);
+		aux=aux->sig;
+	}
+	printf("\n");
+}
 /* 
 //Codigo extra que puede servir
 //Imprime los productos y produccion por separado
