@@ -161,7 +161,7 @@ void ciclo1 (LISTA *p2)
 	char pal[50],pal1 [50];
 	char  l[2];
 	prin=prin->sig;
-	while(prin!=NULL)
+	while(prin->sig!=NULL)
 	{
 		while(aux!=NULL)
 		{
