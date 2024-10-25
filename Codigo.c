@@ -168,37 +168,50 @@ void ciclo1 (LISTA *p2)
 				{
 					for(int j=0;aux->produccion[j]!='\0';j++)
 					{
-						pal[j]=aux->produccion[i+j];
+						pal[j]=aux->produccion[i+j+1];
 					}
 					for(int k=0;k<i-1;k++)
 					{
 						pal1[k]=aux->produccion[k];
 					}
 					l[0]=aux->produccion[i+1];
-					l[1]='\0';
-					strcpy(aux->produccion,pal);
+					if(i>=2)
+					{
+					strcpy(aux->produccion,pal1);
 					strcat(aux->produccion,"{");
+					}
+					else
+					{
+						strcpy(aux->produccion,"{");
+					}
 					strcat(aux->produccion,l);
 					strcat(aux->produccion,"}");
-					strcat(aux->produccion,pal1);
+					strcat(aux->produccion,pal);
 				}
 				else
 				{
-					for(int j=1;aux->produccion[j]!='\0';j++)
+					for(int j=0;aux->produccion[j]!='\0';j++)
 					{
-						pal[j]=aux->produccion[i+j];
+						pal[j]=aux->produccion[i+j+1];
 					}
 					for(int k=0;k<i;k++)
 					{
 						pal1[k]=aux->produccion[k];
 					}
 					l[0]=aux->produccion[i-1];
-					l[1]='\0';
-					strcpy(aux->produccion,pal);
+					if(i>=2)
+					{
+					strcpy(aux->produccion,pal1);
 					strcat(aux->produccion,"{");
+					}
+					else
+					{
+						strcpy(aux->produccion,"{");
+					}
+			
 					strcat(aux->produccion,l);
 					strcat(aux->produccion,"}");
-					strcat(aux->produccion,pal1);
+					strcat(aux->produccion,pal);
 				}
 			}
 		}
