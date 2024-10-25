@@ -154,36 +154,64 @@ void paso1(LISTA *p2)
 //Hace el primer ciclo de arriba hacia abajo
 void ciclo1 (LISTA *p2)
 {
-	LISTA *aux=p2,*aux1=p2;
-	int i;
-	char op;
-	while(aux1!=NULL)
+	LISTA *aux=p2;
+	int i,j;
+	char op[50],l;
+	while(aux!=NULL)
 	{
-		aux=p2;
-		while(aux!=NULL)
+		i=0;
+		j=0;
+		while(aux->produccion[i]!='\0')
 		{
-			i=0;
-			while(aux->produccion[i]!='\0')
+			if(aux->produccion[i]==aux->produ[0])
 			{
-				if(aux1->produ[0]==aux->produccion[i])
+				if(aux->produccion[i+1]=='|')
 				{
-					if(aux->produccion[i+1]=='|')
+					l=aux->produccion[i-1];
+					aux->produccion[i-1]='{';
+					aux->produccion[i]=l;
+					while(aux->produccion[i]!='\0')
 					{
-						op=aux->produccion[i-1];
-						strcpy(aux->produccion,"{op}");
+						op[j]=aux->produccion[i];
+						j++;
 						i++;
 					}
-					else
+					op[j]='\0';
+					aux->produccion[i+1]='}';
+					aux->produccion[i+2]='\0';
+					strcat(aux->produccion,op);
+					i=0;
+					j=0;
+				}
+				else
+				{
+					aux->produccion[i]='{';
+					i+=2;
+					while(aux->produccion[i]!='\0')
 					{
-						op=aux->produccion[i+1];
-						strcpy(aux->produccion,"{op}");
+						op[j]=aux->produccion[i];
+						j++;
 						i++;
 					}
+					op[j]='\0';
+					aux->produccion[i+2]='}';
+					aux->produccion[i+3]='\0';
+					strcat(aux->produccion,op);
+					i=0;
+					j=0;
 				}
 			}
-			aux=aux->sig;
+			i++;
 		}
-		aux1=aux1->sig;
+		aux=aux->sig;
+	} 
+	
+
+	aux=p2;
+	while(aux!=NULL)
+	{
+		printf("%s  %s\n",aux->produ,aux->produccion);
+		aux=aux->sig;
 	}
 }
 
