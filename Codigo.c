@@ -326,7 +326,7 @@ void sust(LISTA *p2)
 {
 	LISTA *aux=p2;
 	aux=aux->sig;
-	char l,des[50]={0};
+	char l[2],des[50]={0},des1[50]={0};
 	for(int i=0;aux->produccion[i]!='\0';i++)
 	{
 		if(aux->produccion[i]>='a'&&aux->produccion[i]<='z')
@@ -337,12 +337,19 @@ void sust(LISTA *p2)
 				{
 					des[j]=aux->produccion[j];
 				}
+				for(int j=4;aux->produccion[j]!='\0';j++)
+				{
+					des1[j]=aux->produccion[j+i+1];
+				}
+				des1[strlen(aux->produccion)]='\0';
 				des[strlen(aux->produccion)]='\0';
-				l=aux->produccion[i];
+				l[0]=aux->produccion[i];
+				l[1]='\0';
 				memset(aux->produccion,0,sizeof(aux->produccion));
-				strcat(aux->produccion,des);
+				strcpy(aux->produccion,des);
 				strcat(aux->produccion,"+");
-				strcat(aux->produccion,des);
+				strcat(aux->produccion,l);
+				strcat(aux->produccion,des1);
 			}
 		}
 	}
