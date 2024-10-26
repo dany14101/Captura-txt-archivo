@@ -253,12 +253,14 @@ void ciclo1 (LISTA *p2)
 //Hace el segundo ciclo de abajo
 void ciclo2 (LISTA *p2)
 {
-	LISTA *aux=p2,*prin=p2,*rel=p2;}
+	LISTA *aux=p2,*prin=p2,*rel=p2;
 	char pal[50],pal1 [50];
 	char  l[2];
-	rel->ant=p2;
+	if(rel!=NULL)
+	{
 	rel=rel->sig;
-	while(rel->sig!=NULL)
+	}
+	while(rel!=NULL&&rel->sig!=NULL)
 	{
 		rel->ant=aux;
 		aux=rel;
@@ -266,7 +268,7 @@ void ciclo2 (LISTA *p2)
 	}
 	aux=p2;
 	prin=rel;
-	while(prin->ant!=p2)
+	while(prin!=NULL&&prin->ant!=p2)
 	{
 		while(aux!=NULL)
 		{
