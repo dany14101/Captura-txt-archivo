@@ -4,5 +4,5 @@ A->bB
 A->a
 B->cB
 B->a
-C->aB
+C->bB
 C->b
