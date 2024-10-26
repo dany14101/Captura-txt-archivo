@@ -354,7 +354,7 @@ void sust(LISTA *p2)
 		}
 	}
 	printf("Paso 4:\n");
-	printf("La exprecion regular es: %s \n",aux->produccion);
+	printf("La exprecion regular es: %s\n\n \n",aux->produccion);
 
 
 }
