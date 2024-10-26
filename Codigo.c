@@ -19,6 +19,7 @@ void imprime(LISTA  *p2);
 void paso1 (LISTA *p2);
 void ciclo1 (LISTA *p2);
 void ciclo2 (LISTA *p2);
+void sust(LISTA *p2);
 
 int main()
 { 
@@ -36,6 +37,7 @@ int main()
 	paso1 (p2);
 	ciclo1(p2);
 	ciclo2(p2);
+	sust(p2);
 	fclose(arch);
 }    
 
@@ -318,6 +320,38 @@ void ciclo2 (LISTA *p2)
 	}
 	printf("\n");
 }
+
+//Paso 4 convierte la primera produccion
+void sust(LISTA *p2)
+{
+	LISTA *aux=p2;
+	aux=aux->sig;
+	char l,des[50]={0};
+	for(int i=0;aux->produccion[i]!='\0';i++)
+	{
+		if(aux->produccion[i]>='a'&&aux->produccion[i]<='z')
+		{
+			if(aux->produccion[i+1]=='{')
+			{
+				for(int j=0;j<i;j++)
+				{
+					des[j]=aux->produccion[j];
+				}
+				des[strlen(aux->produccion)]='\0';
+				l=aux->produccion[i];
+				memset(aux->produccion,0,sizeof(aux->produccion));
+				strcat(aux->produccion,des);
+				strcat(aux->produccion,"+");
+				strcat(aux->produccion,des);
+			}
+		}
+	}
+	printf("Paso 4:\n");
+	printf("La exprecion regular es: %s \n",aux->produccion);
+
+
+}
+
 /* 
 //Codigo extra que puede servir
 //Imprime los productos y produccion por separado
