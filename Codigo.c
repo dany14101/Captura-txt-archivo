@@ -173,65 +173,87 @@ void ciclo1 (LISTA *p2)
 			for(int i=0;aux->produccion[i]!='\0';i++)
 			{
 				if(aux->produccion[i]==prin->produ[0])
-				{
-					if(aux->produccion[i+1]!='|')
+				{	
+					if(strcmp(aux->produccion,prin->produccion)==0)
 					{
-						memset(pal,0,sizeof(pal));
-						memset(pal1,0,sizeof(pal1));
-						for(int j=0;aux->produccion[i+j+1]!='\0';j++)
+
+						if(aux->produccion[i+1]!='|')
 						{
-							pal[j]=aux->produccion[i+j+1];
-						}
-						for(int k=0;k<i;k++)
-						{
-							pal1[k]=aux->produccion[k];
-						}
-						l[0]=aux->produccion[i-1];
-						l[1]='\0';
-						if(i>=2)
-						{
-							strcpy(aux->produccion,pal1);
-							strcat(aux->produccion,"{");
+							memset(pal,0,sizeof(pal));
+							memset(pal1,0,sizeof(pal1));
+							for(int j=0;aux->produccion[i+j+1]!='\0';j++)
+							{
+								pal[j]=aux->produccion[i+j+1];
+							}
+							for(int k=0;k<i;k++)
+							{
+								pal1[k]=aux->produccion[k];
+							}
+							l[0]=aux->produccion[i-1];
+							l[1]='\0';
+							if(i>=2)
+							{
+								strcpy(aux->produccion,pal1);
+								strcat(aux->produccion,"{");
+							}
+							else
+							{
+								strcpy(aux->produccion,"{");
+							}
+							strcat(aux->produccion,l);
+							strcat(aux->produccion,"}");
+							strcat(aux->produccion,pal);
 						}
 						else
 						{
-							strcpy(aux->produccion,"{");
+							memset(pal,0,sizeof(pal));
+							memset(pal1,0,sizeof(pal1));
+							for(int j=0;aux->produccion[j+i+1]!='\0';j++)
+							{
+								pal[j]=aux->produccion[i+j+1];
+							}
+							for(int k=0;k<i;k++)
+							{
+								pal1[k]=aux->produccion[k];
+							}
+							l[0]=aux->produccion[i-1];
+							l[1]='\0';
+							memset(aux->produccion,0,40);
+							if(i>=2)
+							{
+								strcat(aux->produccion,pal1);
+								strcat(aux->produccion,"{");
+							}
+							else
+							{
+								strcat(aux->produccion,"{");
+							}
+			
+							strcat(aux->produccion,l);
+							strcat(aux->produccion,"}");
+					
+							strcat(aux->produccion,pal);
 						}
-						strcat(aux->produccion,l);
-						strcat(aux->produccion,"}");
-						strcat(aux->produccion,pal);
 					}
 					else
 					{
-						memset(pal,0,sizeof(pal));
-						memset(pal1,0,sizeof(pal1));
-						for(int j=0;aux->produccion[j+i+1]!='\0';j++)
-						{
-							pal[j]=aux->produccion[i+j+1];
-						}
-						for(int k=0;k<i;k++)
-						{
-							pal1[k]=aux->produccion[k];
-						}
-						l[0]=aux->produccion[i-1];
-						l[1]='\0';
-						memset(aux->produccion,0,40);
-						if(i>=2)
-						{
-							strcat(aux->produccion,pal1);
+							memset(pal,0,sizeof(pal));
+							memset(pal1,0,sizeof(pal1));
+							for(int j=0;aux->produccion[j+i+1]!='\0';j++)
+							{
+								pal[j]=aux->produccion[i+j+1];
+							}
+							for(int k=0;k<i;k++)
+							{
+								pal1[k]=aux->produccion[k];
+							}
+							memset(aux->produccion,0,40);
+							strcpy(aux->produccion,pal1);
 							strcat(aux->produccion,"{");
-						}
-						else
-						{
-							strcat(aux->produccion,"{");
-						}
-			
-						strcat(aux->produccion,l);
-						strcat(aux->produccion,"}");
-					
-						strcat(aux->produccion,pal);
+							strcat(aux->produccion,prin->produccion);
+							strcat(aux->produccion,"}");
+							strcat(aux->produccion,pal);
 					}
-				}
 			}
 		aux=aux->sig;
 		}
