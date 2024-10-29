@@ -12,7 +12,7 @@ typedef struct LISTA
 
 
 
-LISTA* crean(FILE *arch);
+LISTA* crean();
 LISTA* crear(FILE *arch);
 void captura(FILE *arch, LISTA **p2);
 void imprime(LISTA  *p2);
@@ -42,7 +42,7 @@ int main()
 }    
 
 //Crea el nodo
-LISTA * crean(FILE *arch)
+LISTA * crean()
 {
 	LISTA *p;
 	p=(LISTA*)malloc(sizeof(LISTA));
@@ -104,8 +104,7 @@ void imprime(LISTA  *p2)
 void paso1(LISTA *p2)
 {
 	int i,j;
-    LISTA *aux=p2,*corre,*ant;
-	char produ[50]="";
+    LISTA *aux=p2,*corre,*ant;	
 //Separa el producto y la produccion
 	while(aux!=NULL)
 	{
