@@ -293,10 +293,10 @@ void ciclo2 (LISTA *p2)
 		rel=rel->sig;
 	}
 	prin=aux;
-	aux=p2;
+	rel=aux;
 	while(prin->ant!=p2)
 	{
-		while(aux!=NULL)
+		while(aux->ant!=NULL)
 		{
 			for(int i=0;aux->produccion[i]!='\0';i++)
 			{
@@ -385,10 +385,10 @@ void ciclo2 (LISTA *p2)
 					}	
 				}
 			}
-		aux=aux->sig;
+		aux=aux->ant;
 		}
 		prin=prin->ant;
-		aux=p2;
+		aux=rel;
 	}
 	aux=p2;
 	printf("\n");
@@ -404,39 +404,30 @@ void ciclo2 (LISTA *p2)
 //Paso 4 convierte la primera produccion
 void sust(LISTA *p2)
 {
+	int j=0;
 	LISTA *aux=p2;
+	char cadena[50]={0};
 	aux=aux->sig;
-	char l[2],des[50]={0},des1[50]={0};
+	
 	for(int i=0;aux->produccion[i]!='\0';i++)
 	{
-		if(aux->produccion[i]>='a'&&aux->produccion[i]<='z')
+		if(aux->produccion[i]=='|')
 		{
-			if(aux->produccion[i+1]=='{')
-			{
-				for(int j=0;j<i;j++)
-				{
-					des[j]=aux->produccion[j];
-				}
-				for(int j=4;aux->produccion[j]!='\0';j++)
-				{
-					des1[j]=aux->produccion[j+i+1];
-				}
-				des1[strlen(aux->produccion)]='\0';
-				des[strlen(aux->produccion)]='\0';
-				l[0]=aux->produccion[i];
-				l[1]='\0';
-				memset(aux->produccion,0,sizeof(aux->produccion));
-				strcpy(aux->produccion,des);
-				strcat(aux->produccion,"+");
-				strcat(aux->produccion,l);
-				strcat(aux->produccion,des1);
-			}
+			aux->produccion[i]=' ';
 		}
 	}
+	for(int i=0;aux->produccion[i]!='\0';i++)
+	{
+		if(aux->produccion[i]!=' ')
+		{
+				cadena[j++]=aux->produccion[i];
+		}
+	}
+	cadena[j]='\0';
+	strcpy(aux->produccion,cadena);
+
 	printf("Paso 4:\n");
 	printf("La exprecion regular es: %s\n\n \n",aux->produccion);
-
-
 }
 
 /* 
@@ -468,4 +459,29 @@ char *pos,cadena[100],cadena2[100],*pr;
         return 1;
     }
     return 0;
+
+	//Codigo para remplazar lineas
+	if(aux->produccion[i]>='a'&&aux->produccion[i]<='z')
+		{
+			if(aux->produccion[i+1]=='{')
+			{
+				for(int j=0;j<i;j++)
+				{
+					des[j]=aux->produccion[j];
+				}
+				for(int j=4;aux->produccion[j]!='\0';j++)
+				{
+					des1[j]=aux->produccion[j+i+1];
+				}
+				des1[strlen(aux->produccion)]='\0';
+				des[strlen(aux->produccion)]='\0';
+				l[0]=aux->produccion[i];
+				l[1]='\0';
+				memset(aux->produccion,0,sizeof(aux->produccion));
+				strcpy(aux->produccion,des);
+				strcat(aux->produccion,"+");
+				strcat(aux->produccion,l);
+				strcat(aux->produccion,des1);
+			}
+		}
 */
