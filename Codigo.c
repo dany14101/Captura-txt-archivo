@@ -404,9 +404,9 @@ void ciclo2 (LISTA *p2)
 //Paso 4 convierte la primera produccion
 void sust(LISTA *p2)
 {
-	int j=0;
+	int j=0,fin;
 	LISTA *aux=p2;
-	char cadena[50]={0};
+	char cadena[50]={0},des[50]={0},des1[50]={0},l[2];
 	aux=aux->sig;
 	
 	for(int i=0;aux->produccion[i]!='\0';i++)
@@ -425,6 +425,35 @@ void sust(LISTA *p2)
 	}
 	cadena[j]='\0';
 	strcpy(aux->produccion,cadena);
+
+//Remplaza los{a} por a*
+	for(int i=0;aux->produccion[i]!='\0';i++)
+	{	
+		if(aux->produccion[i]=='{')
+		{
+			fin=i+1;
+			while(aux->produccion[fin]!='}'&&aux->produccion[fin]!='\0')
+			{
+				fin++;
+			}
+/*Utilizo el strncpy para que copie desde la cadena hasta cuando encuentra el final
+y el strcpy  suma el tamaño del fin y el terminador de cadena  y reseteo la i por si se vuelve a requerir*/
+			if(aux->produccion[fin]=='}')
+			{
+				l[0]=aux->produccion[i+1];
+				l[1]='\0';
+				strncpy(des,aux->produccion,i);
+				des[i]='\0';
+				strcpy(des1,aux->produccion+fin+1);
+				memset(aux->produccion,0,sizeof(aux->produccion));
+				strcpy(aux->produccion,des);
+				strcat(aux->produccion,l);
+				strcat(aux->produccion,"*");
+				strcat(aux->produccion,des1);
+				i=strlen(aux->produccion-1);
+			}
+		}
+	}
 
 	printf("Paso 4:\n");
 	printf("La exprecion regular es: %s\n\n \n",aux->produccion);
