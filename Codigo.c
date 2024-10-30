@@ -174,7 +174,7 @@ void ciclo1 (LISTA *p2)
 			{
 				if(aux->produccion[i]==prin->produ[0])
 				{	
-					if(strcmp(aux->produccion,prin->produccion)==0)
+					if(strcmp(prin->produccion,aux->produccion)==0)
 					{
 
 						if(aux->produccion[i+1]!='|')
@@ -237,23 +237,31 @@ void ciclo1 (LISTA *p2)
 					}
 					else
 					{
-							memset(pal,0,sizeof(pal));
-							memset(pal1,0,sizeof(pal1));
-							for(int j=0;aux->produccion[j+i+1]!='\0';j++)
+						memset(pal,0,sizeof(pal));
+						memset(pal1,0,sizeof(pal1));
+						for(int j=0;aux->produccion[j+i+1]!='\0';j++)
+						{
+							if (aux->produccion[j+i+1]!='|')
 							{
 								pal[j]=aux->produccion[i+j+1];
 							}
-							for(int k=0;k<i;k++)
+						}
+						for(int k=0;k<i;k++)
+						{	
+							if (aux->produccion[k]!='|')
 							{
-								pal1[k]=aux->produccion[k];
+							pal1[k]=aux->produccion[k];
 							}
-							memset(aux->produccion,0,40);
-							strcpy(aux->produccion,pal1);
-							strcat(aux->produccion,"{");
-							strcat(aux->produccion,prin->produccion);
-							strcat(aux->produccion,"}");
-							strcat(aux->produccion,pal);
-					}
+						}
+						memset(aux->produccion,0,sizeof(aux->produccion));
+						strcpy(aux->produccion,pal1);
+						strcat(aux->produccion,"(");
+						strcat(aux->produccion,prin->produccion);
+						strcat(aux->produccion,")");
+						strcat(aux->produccion,pal);
+						break;
+					}	
+				}
 			}
 		aux=aux->sig;
 		}
