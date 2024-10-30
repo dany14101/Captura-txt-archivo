@@ -241,18 +241,14 @@ void ciclo1 (LISTA *p2)
 						memset(pal1,0,sizeof(pal1));
 						for(int j=0;aux->produccion[j+i+1]!='\0';j++)
 						{
-							if (aux->produccion[j+i+1]!='|')
-							{
-								pal[j]=aux->produccion[i+j+1];
-							}
+
+							pal[j]=aux->produccion[i+j+1];
 						}
 						for(int k=0;k<i;k++)
 						{	
-							if (aux->produccion[k]!='|')
-							{
-							pal1[k]=aux->produccion[k];
-							}
+								pal1[k]=aux->produccion[k];
 						}
+						
 						memset(aux->produccion,0,sizeof(aux->produccion));
 						strcpy(aux->produccion,pal1);
 						strcat(aux->produccion,"(");
