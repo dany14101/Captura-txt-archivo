@@ -286,15 +286,15 @@ void ciclo2 (LISTA *p2)
 	{
 	rel=rel->sig;
 	}
-	while(rel!=NULL&&rel->sig!=NULL)
+	while(rel!=NULL)
 	{
 		rel->ant=aux;
 		aux=rel;
 		rel=rel->sig;
 	}
+	prin=aux;
 	aux=p2;
-	prin=rel;
-	while(prin!=NULL&&prin->ant!=p2)
+	while(prin->ant!=p2)
 	{
 		while(aux!=NULL)
 		{
